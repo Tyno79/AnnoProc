@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="AnnoProc">
+    <output-path>$PROJECT_DIR$/out/artifacts/AnnoProc</output-path>
+    <root id="archive" name="AnnoProc.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/src/AnnosWithoutProcessors.java" />
+    </root>
+  </artifact>
+</component>
