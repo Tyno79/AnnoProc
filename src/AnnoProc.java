@@ -31,8 +31,24 @@ public class AnnoProc extends AbstractProcessor {
                     Anno anno = (Anno) el.getAnnotation(Anno.class);
                     messager.printMessage(Diagnostic.Kind.NOTE, "Je vais try");
                     PrintWriter pw = new PrintWriter(filer.createResource( StandardLocation.SOURCE_OUTPUT , "", anno.className() + ".java").openOutputStream());
-                    pw.println("public class " + ((Anno) anno).className() + " {\n}");
+                    pw.println("public class " + (anno).className() + " {");
 
+                    for(int i = 0; i < (anno).attributesType().length; i++) {
+                        pw.println("\t" + (anno).attributesType()[i] + " " + (anno).attributesName()[i] + ";");
+                    }
+                    pw.println("");
+
+                    for(int i = 0; i < (anno).attributesType().length; i++) {
+                        String attributesCamelCase = (anno).attributesName()[i].substring(0, 1).toUpperCase() + (anno).attributesName()[i].substring(1);
+                        pw.println("\tpublic " + (anno).attributesType()[i] + " get" + attributesCamelCase +
+                                    "() {\n\t\treturn this." + (anno).attributesName()[i] + ";\n\t}"
+                        );
+                        pw.println("\tpublic void set" + attributesCamelCase + "(" + (anno).attributesType()[i]
+                                    + " arg) {\n\t\t" + "this." + (anno).attributesName()[i] + " = arg;\n\t}"
+                        );
+                    }
+
+                    pw.println("}");
                     pw.close();
                     messager.printMessage(Diagnostic.Kind.NOTE, "J'ai try");
                 }
